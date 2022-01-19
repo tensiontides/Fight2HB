@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block body %}
+  <!-- Primary Page Layout –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<div class="container">
+  <div class="row">
+    <div class="eight columns" style="margin-top: 20%">
+      <h4>FightClub to Hombrewery Markdown</h4>
+      <p style='color:darkgrey'>version: {{ version }}</p>
+      <p>Convert your PC XML file to a nice stat block</p>
+    </div>
+     <div class="four columns columns" style="margin-top: 20%">
+      <a href="https://github.com/tensiontodes/Fight2HB" target="_blank">
+      </a>
+    </div>
+  </div>
+  <!-- Input Buttons -->
+  <div class="row">
+    <form action="" method="POST" enctype="multipart/form-data">
+      <b>1:</b>&emsp;<input type="file" name="myfile"><br>
+      <b>2:</b>&emsp;<input type="submit" name="submitupload" value="Convert!" >
+
+    </form>
+  </div>
+
+  <!-- Download Button -->
+  <div class="row"  style='color:darkgray'>
+    <pre>{{ content }}</pre>
+    <pre>{{ nlines }}</pre>
+  </div>
+  {% if session['LOADED'] %}
+    <div class="row"  style='color:black'>
+      <h4>PC Markdown:</h4>
+      <pre><code>
+	  <p>{{ results }}</p>
+      </pre></code>.
+      <h4>All Spells for Compendium:</h4>
+      <pre><code>
+	  <p>{{ spells }}</p>
+      </pre></code>.
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

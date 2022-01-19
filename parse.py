@@ -291,7 +291,6 @@ def output_NPC_statblock(dat, comp):
 {thisPC.sp_block}
 >___
 '''
-    print(text)
     return(text)
 
 def make_spell_block(d):
@@ -332,24 +331,28 @@ def output_spells(dat):
             if "spell" in subsec.keys():
                 spells.extend([x for x in subsec["spell"] ])
 
-    spell_text = {}
+    spell_dict = {}
     for d in spells:
         (name, lev, block) = make_spell_block(d)
         print(block)
+        spell_dict[name] = (lev, block)
+    return(spell_dict)
 
 def main(args):
     sys.stderr.write("Parsing compendium\n")
-    #comp_file = "../FightClub5e/FightClub5eXML/Collections/CoreOnly.xml"
     with open(args.compendium, "rb") as inf:
         comp = xmltodict.parse(inf)
 
-    sys.stderr.write("parsing character sheet\n")
+    sys.stderr.write("parsing character sheet: %s\n" % args.infile)
     with open(args.infile, "rb") as inf:
         dat = xmltodict.parse(inf)
-
-    output_NPC_statblock(dat, comp["compendium"])
+    sys.stderr.write("creating PC stat block")
+    stat_block = output_NPC_statblock(dat, comp["compendium"])
     if args.spells:
-        output_spells(dat)
+        sys.stderr.write("outputting spell blocks")
+        return(stat_block, output_spells(dat))
+    else:
+        return(stat_block, None)
 
 if __name__ == "__main__":
     args = get_args()
