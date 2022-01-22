@@ -159,7 +159,8 @@ class PC:
         self.pp =  10 + abmod(self.absc_w_mods["wis"])
         self.calc_ac(cdat)
         self.get_spell_abmod(cdat)
-        if self.sp_ab_mod:
+        print(self.sp_ab_mod)
+        if any([x is not None for x in self.sp_ab_mod]):
             self.get_spells(cdat)
         self.get_speed(cdat)
         self.get_weapons_and_actions(cdat)
@@ -356,4 +357,7 @@ def main(args):
 
 if __name__ == "__main__":
     args = get_args()
-    main(args)
+    pc_block, sp_block = main(args)
+    sys.stdout.write(pc_block + "\n")
+    if sp_block is not None:
+        sys.stdout.write(sp_block + "\n")
